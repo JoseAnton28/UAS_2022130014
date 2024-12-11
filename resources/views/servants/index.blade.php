@@ -103,7 +103,7 @@
                                             <div class="btn-group" role="group">
                                                 <a href="{{ route('servants.show', $servant) }}"
                                                     class="btn btn-info btn-sm">
-                                                    Lihat
+                                                    View
                                                 </a>
                                                 <a href="{{ route('servants.edit', $servant) }}"
                                                     class="btn btn-warning btn-sm">

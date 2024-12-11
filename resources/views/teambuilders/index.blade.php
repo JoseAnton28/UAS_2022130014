@@ -40,16 +40,16 @@
                         <td>{{ Str::limit($teambuilder->description, 50) }}</td> <!-- Limit description to 50 chars -->
                         <td>
                             <a href="{{ route('teambuilders.show', $teambuilder->id) }}" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i> Lihat
+                                <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ route('teambuilders.edit', $teambuilder->id) }}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('teambuilders.destroy', $teambuilder->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus tim ini?')">
-                                    <i class="fas fa-trash"></i> Hapus
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </td>

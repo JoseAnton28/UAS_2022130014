@@ -7,10 +7,10 @@
             <h1 class="mt-4">Daftar Craft Essence</h1>
 
             <div class="card shadow-sm">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Craft Essence Management</h5>
                     <div class="btn-group">
-                        <a href="{{ route('craftessences.create') }}" class="btn btn-primary">
+                        <a href="{{ route('craftessences.create') }}" class="btn btn-light">
                             <i class="fas fa-plus me-2"></i>Tambah Craft Essence
                         </a>
                     </div>
@@ -74,13 +74,9 @@
                                         </td>
                                         <td>{{ $ce->name_ce }}</td>
                                         <td>
-                                            <span class="badge 
-                                                {{ $ce->rarity_ce == 5 ? 'bg-warning text-dark' : 
-                                                   ($ce->rarity_ce == 4 ? 'bg-purple' : 
-                                                   ($ce->rarity_ce == 3 ? 'bg-info' : 
-                                                   ($ce->rarity_ce == 2 ? 'bg-success' : 'bg-secondary'))) }}">
-                                                {{ $ce->rarity_ce }} ⭐
-                                            </span>
+                                            @for($i = 0; $i < $ce->rarity_ce; $i++)
+                                                <i class="fas fa-star text-warning"></i>
+                                            @endfor
                                         </td>
                                         <td>{{ $ce->max_level_ce }}</td>
                                         <td>
@@ -144,7 +140,6 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
         const deleteBtns = document.querySelectorAll('.delete-btn');
         deleteBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
@@ -154,7 +149,6 @@
             });
         });
 
-        
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -173,9 +167,9 @@
         transform: scale(1.1);
     }
 
-    .bg-purple {
-        background-color: #6f42c1 !important;
-        color: white !important;
+    .text-warning {
+        color: gold !important;
+        text-shadow: 0 0 5px rgba(255,215,0,0.5);
     }
 </style>
 @endpush

@@ -16,21 +16,20 @@ class Teambuilder extends Model
         'craftessence_id',
     ];
 
-    
+
     public function servants()
-{
-    return $this->belongsToMany(Servant::class, 'teambuilder_servants')
-        ->withPivot('craftessence_id') 
-        ->with('craftessence');  
-}
-
-
-
-
-    public function craftessences()
     {
-        return $this->belongsToMany(Craftessence::class, 'servant_teambuilder') 
-                    ->withPivot('servant_id'); 
+        return $this->belongsToMany(Servant::class, 'teambuilder_servants')
+            ->withPivot('craftessence_id')
+            ->with('craftessence'); // Tambahkan eager loading untuk craftessence
+    }
+
+
+
+    public function craftEssences()
+    {
+        return $this->belongsToMany(Craftessence::class, 'teambuilder_servants', 'teambuilder_id', 'craftessence_id')
+            ->withPivot('servant_id');
     }
 }
 

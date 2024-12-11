@@ -15,8 +15,6 @@ return new class extends Migration
             $table->integer('rarity_sv');
             $table->integer('base_hp_sv');
             $table->integer('base_atk_sv');
-            $table->json('skills_sv')->nullable();
-            $table->json('ascension_sv')->nullable();
             $table->string('img_sv')->nullable();
             $table->timestamps();
         });

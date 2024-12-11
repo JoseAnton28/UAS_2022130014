@@ -7,10 +7,10 @@
             <h1 class="mt-4">Daftar Material</h1>
 
             <div class="card shadow-sm">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Material Management</h5>
                     <div class="btn-group">
-                        <a href="{{ route('materials.create') }}" class="btn btn-primary">
+                        <a href="{{ route('materials.create') }}" class="btn btn-light">
                             <i class="fas fa-plus me-2"></i>Tambah Material
                         </a>
                     </div>

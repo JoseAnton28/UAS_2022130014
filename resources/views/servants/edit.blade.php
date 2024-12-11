@@ -111,23 +111,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <label for="skills_sv" class="form-label">Skills (JSON format)</label>
-                                <textarea class="form-control @error('skills_sv') is-invalid @enderror" 
-                                          id="skills_sv" name="skills_sv" rows="4">{{ old('skills_sv', $servant->skills_sv) }}</textarea>
-                                @error('skills_sv')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-12">
-                                <label for="ascension_sv" class="form-label">Ascension (JSON format)</label>
-                                <textarea class="form-control @error('ascension_sv') is-invalid @enderror" 
-                                          id="ascension_sv" name="ascension_sv" rows="4">{{ old('ascension_sv', $servant->ascension_sv) }}</textarea>
-                                @error('ascension_sv')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
 
                         <div class="d-grid mt-4">

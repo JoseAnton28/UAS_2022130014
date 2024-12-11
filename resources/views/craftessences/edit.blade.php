@@ -118,45 +118,47 @@
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label">Effects</label>
-                                <div id="effects-container">
-                                    @php
-                                        $effects = [];
-                                        if (is_string($craftessence->effects_ce)) {
-                                            $decoded = json_decode($craftessence->effects_ce, true);
-                                            $effects = is_array($decoded) ? $decoded : [];
-                                        } elseif (is_array($craftessence->effects_ce)) {
-                                            $effects = $craftessence->effects_ce;
-                                        }
+                                <label class="form-label">Effect</label>
+                                @php
+                                    $effects = [];
+                                    if (is_string($craftessence->effects_ce)) {
+                                        $decoded = json_decode($craftessence->effects_ce, true);
+                                        $effects = is_array($decoded) ? $decoded : [];
+                                    } elseif (is_array($craftessence->effects_ce)) {
+                                        $effects = $craftessence->effects_ce;
+                                    }
 
-                                        
-                                        if (empty($effects)) {
-                                            $effects = ['' => ''];
-                                        }
-                                    @endphp
-                                    @foreach($effects as $key => $value)
-                                        <div class="effect-row mb-2 d-flex align-items-center gap-2">
-                                            <input type="text" name="effects_ce[key][]" 
-                                                   placeholder="Effect Key" 
-                                                   class="form-control flex-grow-1" 
-                                                   value="{{ is_string($key) ? htmlspecialchars($key) : '' }}" required>
-                                            <input type="text" name="effects_ce[value][]" 
-                                                   placeholder="Effect Value" 
-                                                   class="form-control flex-grow-1" 
-                                                   value="{{ is_string($value) ? htmlspecialchars($value) : '' }}" required>
-                                        </div>
-                                    @endforeach
+                                    
+                                    $firstEffectKey = key($effects);
+                                    $firstEffectValue = $effects[$firstEffectKey] ?? '';
+                                @endphp
+                                
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <input type="text" name="effects_ce[key]" 
+                                               placeholder="Effect Key" 
+                                               class="form-control" 
+                                               value="{{ is_string($firstEffectKey) ? htmlspecialchars($firstEffectKey) : '' }}" 
+                                               required>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="effects_ce[value]" 
+                                               placeholder="Effect Value" 
+                                               class="form-control" 
+                                               value="{{ is_string($firstEffectValue) ? htmlspecialchars($firstEffectValue) : '' }}" 
+                                               required>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-save me-2"></i>Simpan
                 </button>
-                <a href="{{ route('craftessences.index') }}" class="btn btn-secondary ms-2">
+                <a href="{{ route('craftessences.index') }}" class="btn btn-secondary">
                     <i class="bi bi-arrow-left me-2"></i>Kembali
                 </a>
             </div>

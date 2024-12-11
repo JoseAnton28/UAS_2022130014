@@ -13,21 +13,6 @@ class Material extends Model
         'img_mt',
     ];
 
-    public function servants()
-{
-    return $this->belongsToMany(Servant::class, 'servant_material')
-                ->withPivot('amount')
-                ->withTimestamps();
-}
-    
-public function characterPlanners()
-{
-    return $this->belongsToMany(CharacterPlanner::class, 'character_planner_material')
-                ->withPivot('amount')
-                ->withTimestamps();
-}
-
-
     public static function getTypes()
     {
         return [

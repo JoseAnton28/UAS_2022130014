@@ -81,41 +81,6 @@
                             <img id="preview" src="" class="img-fluid" style="display:none; max-height: 300px;">
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="skills_sv" class="form-label">Skills (JSON)</label>
-                        <textarea name="skills_sv" id="skills_sv" 
-                                  class="form-control @error('skills_sv') is-invalid @enderror" 
-                                  rows="4">
-[
-    {
-        "name": "Skill 1",
-        "description": "Skill description"
-    }
-]
-                        </textarea>
-                        @error('skills_sv')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ascension_sv" class="form-label">Ascension (JSON)</label>
-                        <textarea name="ascension_sv" id="ascension_sv" 
-                                  class="form-control @error('ascension_sv') is-invalid @enderror" 
-                                  rows="4">
-[
-    {
-        "level": 1,
-        "materials": ["Material 1", "Material 2"]
-    }
-]
-                        </textarea>
-                        @error('ascension_sv')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-plus me-2"></i>Tambah Servant

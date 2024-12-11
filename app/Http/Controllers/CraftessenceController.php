@@ -97,64 +97,73 @@ public function show(Craftessence $craftessence)
     return view('craftessences.show', compact('craftessence'));
 }
 
-    public function edit(Craftessence $craftessence)
-    {
-        $rarities = $this->rarities;
+public function edit(Craftessence $craftessence)
+{
+    $rarities = $this->rarities;
 
-        
-        $craftessence->effects = $craftessence->effects_ce ? 
-            json_decode($craftessence->effects_ce, true) : [];
-
-        return view('craftessences.edit', compact('craftessence', 'rarities'));
+    
+    if (is_string($craftessence->effects_ce)) {
+        $effects = json_decode($craftessence->effects_ce, true);
+        $craftessence->effects_ce = $effects ?? [];
     }
 
-    public function update(Request $request, Craftessence $craftessence)
-    {
-        $validatedData = $request->validate([
-            'name_ce' => 'required|unique:craftessences,name_ce,'.$craftessence->id.'|max:255',
-            'rarity_ce' => 'required|in:' . implode(',', $this->rarities),
-            'max_level_ce' => 'required|integer|min:1|max:100',
-            'base_attack_ce' => 'required|integer|min:0',
-            'base_hp_ce' => 'required|integer|min:0',
-            'effects_ce' => 'nullable|array',
-            'img_ce' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+    return view('craftessences.edit', compact('craftessence', 'rarities'));
+}
 
+public function update(Request $request, Craftessence $craftessence)
+{
+    $validatedData = $request->validate([
+        'name_ce' => 'required|string|max:255',
+        'rarity_ce' => 'required|integer|between:1,5',
+        'max_level_ce' => 'required|integer',
+        'base_attack_ce' => 'required|integer',
+        'base_hp_ce' => 'required|integer',
+        'img_ce' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        'effects_ce' => 'nullable|array',
+    ]);
+
+    
+    $craftessence->name_ce = $validatedData['name_ce'];
+    $craftessence->rarity_ce = $validatedData['rarity_ce'];
+    $craftessence->max_level_ce = $validatedData['max_level_ce'];
+    $craftessence->base_attack_ce = $validatedData['base_attack_ce'];
+    $craftessence->base_hp_ce = $validatedData['base_hp_ce'];
+    
+    
+    if (isset($request->input('effects_ce')['key']) && isset($request->input('effects_ce')['value'])) {
+        $effects = [
+            $request->input('effects_ce')['key'] => $request->input('effects_ce')['value']
+        ];
+        $craftessence->effects_ce = json_encode($effects);
+    } else {
+        $craftessence->effects_ce = null;
+    }
+
+    
+    if ($request->hasFile('img_ce')) {
         
-        if ($request->hasFile('img_ce')) {
-            
-            if ($craftessence->img_ce && File::exists(public_path($craftessence->img_ce))) {
-                File::delete(public_path($craftessence->img_ce));
-            }
-
-            $photo = $request->file('img_ce');
-            
-            
-            $filename = Str::slug($validatedData['name_ce']) . '_' . time() . '.' . $photo->getClientOriginalExtension();
-            
-            
-            $uploadPath = public_path('uploads/craftessences');
-            if (!File::exists($uploadPath)) {
-                File::makeDirectory($uploadPath, 0755, true);
-            }
-
-            
-            $photo->move($uploadPath, $filename);
-
-            
-            $validatedData['img_ce'] = 'uploads/craftessences/' . $filename;
+        if ($craftessence->img_ce && File::exists(public_path($craftessence->img_ce))) {
+            File::delete(public_path($craftessence->img_ce));
         }
 
         
-        $validatedData['effects_ce'] = $request->has('effects_ce') ? 
-            json_encode($request->effects_ce) : null;
+        $photo = $request->file('img_ce');
+        $filename = Str::slug($craftessence->name_ce) . '_' . time() . '.' . $photo->getClientOriginalExtension();
+        
+        $uploadPath = public_path('uploads/craftessences');
+        if (!File::exists($uploadPath)) {
+            File::makeDirectory($uploadPath, 0755, true);
+        }
 
-        $craftessence->update($validatedData);
-
-        return redirect()->route('craftessences.index')
-            ->with('success', 'Craft Essence berhasil diperbarui');
+        $photo->move($uploadPath, $filename);
+        $craftessence->img_ce = 'uploads/craftessences/' . $filename;
     }
 
+    $craftessence->save();
+
+    return redirect()->route('craftessences.index')
+        ->with('success', 'Craft Essence berhasil diupdate');
+}
     public function destroy(Craftessence $craftessence)
     {
         
